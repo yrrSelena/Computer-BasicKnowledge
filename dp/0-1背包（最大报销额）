@@ -1,0 +1,66 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1864
+
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int dp[3000100];
+int main()
+{
+    double q;
+    int n,Q;
+    char type;
+    double price;
+    int P,sum;
+    while(cin>>q>>n&&n!=0)
+    {
+        int x=0;
+        Q=(int)(q*100);
+        int p[31];
+        for(int i=0;i<n;i++)
+        {
+            int m;
+            cin>>m;
+            int flag=1;
+            sum=0;
+            int Type[3]={0,0,0};
+            while(m--)
+            {
+                scanf(" %c:%lf",&type,&price);//注意数据的接收
+                P=(int)(price*100);//将浮点数据转化为整数类型数据 用于dp
+                if(type<'A'||type>'C')
+                {
+                    flag=0;
+                }
+                else
+                {
+                    Type[type-'A']+=P;
+                    if(Type[type-'A']>60000)
+                        flag=0;
+                }
+            }
+            for(int i=0;i<3;i++)
+                sum+=Type[i];
+            if(sum>100000)
+                flag=0;
+            if(flag==1)
+                p[x++]=sum;
+        }
+        memset(dp,0,sizeof(dp));
+        for(int i=0;i<x;i++)
+        {
+            for(int j=Q;j>=p[i];j--)
+            {
+                dp[j]=max(dp[j],dp[j-p[i]]+p[i]);
+            }
+        }
+        printf("%.2lf\n",dp[Q]/100.0);
+
+
+    }
+    return 0;
+}
+
