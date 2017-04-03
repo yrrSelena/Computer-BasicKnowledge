@@ -1,0 +1,47 @@
+//hdu 2084 数塔 简单从上往下递推
+//http://acm.hdu.edu.cn/showproblem.php?pid=2084
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+#define MAX 0x3f3f3f
+int a[105][105];
+int dp[105][105];
+int main()
+{
+    int c;
+    scanf("%d",&c);
+    while(c--)
+    {
+        int n;
+        scanf("%d",&n);
+        a[0][0]=0;
+        for(int i=1;i<=n;i++)
+        {
+            a[i][0]=0;
+            for(int j=1;j<=i;j++)
+            {
+                scanf("%d",&a[i][j]);
+            }
+        }
+        memset(dp,0,sizeof(dp));
+        for(int i=1;i<=n;i++)
+        {
+            for(int j=1;j<=i;j++)
+            {
+                dp[i][j]=max(dp[i-1][j-1],dp[i-1][j])+a[i][j];
+            }
+        }
+        int maxd=dp[n][0];
+        for(int i=1;i<=n;i++)
+        {
+            if(dp[n][i]>maxd)
+                maxd=dp[n][i];
+        }
+        printf("%d\n",maxd);
+    }
+    return 0;
+}
+
