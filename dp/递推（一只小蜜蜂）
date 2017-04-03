@@ -1,0 +1,37 @@
+//一只小蜜蜂
+//http://acm.hdu.edu.cn/showproblem.php?pid=2044
+/*
+只能+1或+2 
+Fibonacci数列
+*/
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+#define MAX 0x3f3f3f
+long long f[60];
+void init()
+{
+    f[1]=1;
+    f[2]=2;
+    for(int i=3;i<60;i++)
+    {
+        f[i]=f[i-1]+f[i-2];
+    }
+}
+int main()
+{
+    int n;
+    init();
+    scanf("%d",&n);
+    while(n--)
+    {
+        int a,b;
+        scanf("%d%d",&a,&b);
+        cout<<f[b-a]<<endl;
+    }
+    return 0;
+}
+
