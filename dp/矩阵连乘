@@ -1,3 +1,9 @@
+/*
+n:矩阵个数+1;
+a[i]:第i个矩阵的列数
+m[i][j]:第i~j个矩阵连乘所需的运算次数
+*/
+
 #include <iostream>
 #include <stdio.h>
 using namespace std;
@@ -27,7 +33,7 @@ int main(){   
                         if(t<m[i][j])                    
                         {                        
                               m[i][j]=t;                        
-                              s[i][j]=k;                    
+                              s[i][j]=k;    //记录节点                
                         }                
                   }            
              }        
