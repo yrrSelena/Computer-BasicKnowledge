@@ -1,0 +1,64 @@
+//区间dp(线性)
+//参考：http://www.cnblogs.com/jiu0821/p/4493497.html
+//例题
+/*
+石子合并（一）
+时间限制：1000 ms  |  内存限制：65535 KB
+难度：3
+ 
+描述
+    有N堆石子排成一排，每堆石子有一定的数量。现要将N堆石子并成为一堆。合并的过程只能每次将相邻的两堆石子堆成一堆，每次合并花费的代价为这两堆石子的和，经过N-1次合并后成为一堆。求出总的代价最小值。
+ 
+输入
+有多组测试数据，输入到文件结束。
+每组测试数据第一行有一个整数n，表示有n堆石子。
+接下来的一行有n（0< n <200）个数，分别表示这n堆石子的数目，用空格隔开
+输出
+输出总代价的最小值，占单独的一行
+样例输入
+3
+1 2 3
+7
+13 7 8 16 21 4 18
+样例输出
+9
+239
+
+*/
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+using namespace std;
+#define MAX 0x3f3f3f
+int a[1005];
+int sum[1005];
+int m[1005][1005];
+int main()
+{
+    int n;
+    while(scanf("%d",&n)!=EOF)
+    {
+        memset(sum,0,sizeof(sum));
+        for(int i=1;i<=n;i++)
+        {
+            scanf("%d",&a[i]);
+            sum[i]=sum[i-1]+a[i];//计算前i个石子的总质量
+        }
+        memset(m,0,sizeof(m));
+        for(int i=n;i>=1;i--)
+        {
+            for(int j=i+1;j<=n;j++)
+            {
+                int t=MAX;
+                for(int k=i;k<j;k++)
+                    t=min(t,m[i][k]+m[k+1][j]+sum[j]-sum[i-1]);
+                m[i][j]=t;//将i-j之间的石子合并的总代价
+            }
+        }
+        printf("%d\n",m[1][n]);
+    }
+    return 0;
+}
+
