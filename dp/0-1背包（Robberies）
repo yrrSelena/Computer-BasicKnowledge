@@ -1,0 +1,58 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=2955
+
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+#include<vector>
+using namespace std;
+double dp[10100];
+double p[101];
+int m[101];
+int main()
+{
+    int T;
+    scanf("%d",&T);
+    while(T--)
+    {
+        double P;
+        int N;
+        scanf("%lf%d",&P,&N);
+        P=1-P;//成功逃脱的概率
+        int sum=0;
+        for(int i=0;i<N;i++)
+        {
+            scanf("%d%lf",&m[i],&p[i]);
+            p[i]=1-p[i];
+            sum+=m[i];
+        }
+        memset(dp,0,sizeof(dp));
+        dp[0]=1;//设置最初的成功概率为1
+        for(int i=0;i<N;i++)
+        {
+            for(int j=sum;j>=m[i];j--)
+            {
+                double x=dp[j-m[i]]*p[i];
+                if(x>dp[j])//成功逃脱概率越大越好
+                {
+                    dp[j]=x;
+                }
+            }
+        }
+        int maxi=0;
+        for(int i=sum;i>0;i--)
+        {
+            if(dp[i]>P)
+            {
+                maxi=i;break;
+            }
+        }
+        cout<<maxi<<endl;
+
+    }
+
+
+    return 0;
+}
+
