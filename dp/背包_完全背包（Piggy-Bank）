@@ -1,0 +1,49 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1114
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+#include<vector>
+#define MAX 10000000
+using namespace std;
+int dp[10005];
+int cnt[10005];
+int w[505];
+int v[505];
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int e,f;
+        scanf("%d%d",&e,&f);
+        int W=f-e;
+        int n;
+        scanf("%d",&n);
+        for(int i=0;i<n;i++)
+        {
+            scanf("%d%d",&v[i],&w[i]);
+        }
+        dp[0]=0;
+        for(int i=1;i<=W;i++)
+            dp[i]=MAX;//设置初始值为最大值
+        for(int i=0;i<n;i++)
+        {
+            for(int j=w[i];j<=W;j++)
+            {
+                dp[j]=min(dp[j-w[i]]+v[i],dp[j]);
+            }
+        }
+        if(dp[W]==MAX)
+        {
+            cout<<"This is impossible."<<endl;
+        }
+        else{
+            cout<<"The minimum amount of money in the piggy-bank is ";
+            cout<<dp[W]<<"."<<endl;
+        }
+    }
+    return 0;
+}
