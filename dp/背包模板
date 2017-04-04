@@ -1,0 +1,33 @@
+//------------------0-1背包-----------------
+for(int i=0;i<n;i++)
+{
+    for(int j=W;j>=w[i];j--)
+    {
+        dp[j]=max(dp[j],dp[j-w[i]]+v[i]);
+    }
+}
+//函数形式：
+void ZeroOnePack(int w,int v)
+{   
+    for(int i = W;i>=w;i--)  
+    {  
+        dp[i] = max(dp[i],dp[i-w]+v);  
+    }  
+}  
+
+//----------------完全背包-----------------
+for(int i=0;i<n;i++)
+{
+    for(int j=w[i];j<=W;j++)
+    {
+        dp[j]=max(dp[j],dp[j-w[i]]+v[i]);
+    }
+}
+//函数形式：
+void CompletePack(int w,int v) 
+{    
+    for(int i = w;i<=W;i++)  
+    {  
+        dp[i] = max(dp[i],dp[i-w]+v);  
+    }  
+} 
