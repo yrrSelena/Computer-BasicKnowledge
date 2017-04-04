@@ -1,0 +1,42 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=2602
+#include <iostream>
+#include<stdio.h>
+#include<math.h>
+#include<string.h>
+#include<algorithm>
+#include<vector>
+using namespace std;
+int dp[1005];
+int val[1005];
+int vol[1005];
+int main()
+{
+    int t;
+    scanf("%d",&t);
+    while(t--)
+    {
+        int n,v;
+        scanf("%d%d",&n,&v);
+        for(int i=0;i<n;i++)
+        {
+            scanf("%d",&val[i]);
+        }
+        for(int i=0;i<n;i++)
+        {
+            scanf("%d",&vol[i]);
+        }
+        memset(dp,0,sizeof(dp));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=v;j>=vol[i];j--)
+            {
+                int t=dp[j-vol[i]]+val[i];
+                if(t>dp[j])
+                    dp[j]=t;
+            }
+        }
+        cout<<dp[v]<<endl;
+    }
+    return 0;
+}
+
