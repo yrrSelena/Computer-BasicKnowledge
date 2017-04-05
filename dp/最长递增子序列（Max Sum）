@@ -1,0 +1,44 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1003
+
+#include <iostream>
+#include<stdio.h>
+using namespace std;
+#define MIN -10001
+int a[100005];
+int main()
+{
+    int c;
+    scanf("%d",&c);
+    for(int i=1;i<=c;i++)
+    {
+        int n;
+        scanf("%d",&n);
+        for(int j=1;j<=n;j++)
+        {
+            scanf("%d",&a[j]);
+        }
+        int sum=MIN,sumax=MIN;//设定初始值为最小
+        int l=1,r=1,l1=1;
+        for(int j=1;j<=n;j++)
+        {
+            if(sum<0)
+            {
+                l1=j;sum=a[j];
+            }
+            else
+            {
+                sum+=a[j];
+
+            }
+            if(sumax<sum)//若找到比当前值大的，则更改左右区间
+            {
+                l=l1;r=j;sumax=sum;
+            }
+        }
+        printf("Case %d:\n",i);
+        printf("%d %d %d\n",sumax,l,r);
+        if(i!=c)
+            printf("\n");//注意显示格式
+    }
+    return 0;
+}
