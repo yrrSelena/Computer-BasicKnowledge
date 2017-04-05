@@ -1,0 +1,36 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1087
+#include <iostream>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+#define MIN -10001
+int a[1005];
+int s[1005];
+int main()
+{
+    int n;
+    while(scanf("%d",&n)!=EOF&&n!=0)
+    {
+        for(int i=0;i<n;i++)
+        {
+            scanf("%d",&a[i]);
+            s[i]=a[i];
+        }
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<=i;j++)
+            {
+                if(a[i]>a[j])
+                    s[i]=max(s[i],s[j]+a[i]);
+            }
+        }
+        int max=0;
+        for(int i=0;i<n;i++)
+        {
+            if(s[i]>max)
+                max=s[i];
+        }
+        cout<<max<<endl;
+    }
+    return 0;
+}
