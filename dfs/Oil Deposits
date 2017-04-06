@@ -1,0 +1,49 @@
+//http://acm.hdu.edu.cn/showproblem.php?pid=1241
+#include <iostream>
+#include<stdio.h>
+#include<string.h>
+using namespace std;
+char a[105][105];
+int vis[105][105];
+int dx[8]={-1,0,1,-1,1,-1,0,1};
+int dy[8]={-1,-1,-1,0,0,1,1,1};
+int m,n;
+void dfs(int x,int y)
+{
+    vis[x][y]=1;
+    for(int i=0;i<8;i++)
+    {
+        int sx=x+dx[i],sy=y+dy[i];
+        if(sx>=0&&sx<m&&sy>=0&&sy<n&&vis[sx][sy]==0&&a[sx][sy]=='@')
+        {
+            dfs(sx,sy);
+        }
+    }
+    return;
+}
+int main()
+{
+    while(scanf("%d%d",&m,&n)!=EOF&&m!=0&&n!=0)
+    {
+        memset(vis,0,sizeof(vis));
+        for(int i=0;i<m;i++)
+        {
+            getchar();
+            for(int j=0;j<n;j++)
+                scanf("%c",&a[i][j]);
+        }
+        int cnt=0;
+        for(int i=0;i<m;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                if(vis[i][j]==0&&a[i][j]=='@')
+                {
+                    dfs(i,j);cnt++;
+                }
+            }
+        }
+        printf("%d\n",cnt);
+    }
+    return 0;
+}
