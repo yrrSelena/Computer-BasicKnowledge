@@ -1,0 +1,68 @@
+//已知一个二叉树的前序遍历和中序遍历，求该二叉树的后序遍历
+
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+struct Node
+{
+    Node *lchild;
+    Node *rchild;
+    char c;
+}Tree[50];//静态内存分配数组
+int loc;//静态数组中已分配的节点个数
+Node *create()//申请一个节点的空间，返回指向其的节点
+{
+    Tree[loc].lchild=Tree[loc].rchild=NULL;//初始化
+    return &Tree[loc++];
+}
+char str1[30],str2[30];//str1为先序遍历,str2为
+void postOrder(Node *T)
+{
+    if(T->lchild!=NULL)
+    {
+        postOrder(T->lchild);
+    }
+    if(T->rchild!=NULL)
+    {
+        postOrder(T->rchild);
+    }
+    printf("%c",T->c);
+}
+Node *build(int s1,int e1,int s2,int e2)
+{
+    Node* ret=create();//为根节点申请空间
+    ret->c=str1[s1];
+    int rootIdx;
+    for(int i=s2;i<=e2;i++)
+    {
+        if(str2[i]==str1[s1])
+        {
+            rootIdx=i;
+            break;
+        }
+    }
+    if(rootIdx!=s2)//若左子树不为空
+    {
+        ret->lchild=build(s1+1,s1+(rootIdx-s2),s2,rootIdx-1);
+    }
+    if(rootIdx!=e2)//若右子树不为空
+    {
+        ret->rchild=build(s1+(rootIdx-s2)+1,e1,rootIdx+1,e2);
+    }
+    return ret;
+}
+
+int main()
+{
+    while(cin>>str1>>str2)
+    {
+        loc=0;
+        int L1=strlen(str1);
+        int L2=strlen(str2);
+        Node *T=build(0,L1-1,0,L2-1);
+        postOrder(T);
+        printf("\n");
+    }
+    return 0;
+}
