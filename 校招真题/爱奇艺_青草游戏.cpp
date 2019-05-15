@@ -23,6 +23,7 @@ niu
 玩家每次都会尽可能做出让自己赢的决策。
 通过找规律可以发现仅当n%5==2或n%5==0的时候，羊羊会赢；其余时候都是牛牛赢
 
+具体详解可参考 https://blog.csdn.net/qq_27576655/article/details/80048800
 */
 #include<iostream>
 using namespace std;
