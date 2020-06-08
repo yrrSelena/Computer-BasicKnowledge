@@ -1,0 +1,91 @@
+### 题目
+[面试题32 - II. 从上到下打印二叉树II](https://leetcode-cn.com/problems/cong-shang-dao-xia-da-yin-er-cha-shu-ii-lcof/)
+
+从上到下按层打印二叉树，同一层的节点按从左到右的顺序打印，每一层打印到一行。
+
+ 
+
+例如:
+
+给定二叉树: [3,9,20,null,null,15,7],
+
+    3
+   / \\  
+  9  20  
+    /  \\   
+   15   7
+返回其层次遍历结果：
+
+[
+
+  [3],
+  
+  [9,20],
+  
+  [15,7]
+  
+]
+ 
+
+提示：
+
+节点总数 <= 1000
+
+ 
+ 
+### 思路
+层序遍历，先进先出，采用的数据容器为队列  （广度优先搜索）
+1. 创建一个队列queue（用于存储二叉树的节点），并将二叉树的根节点放入队列
+2. 若队列不为空，则记录当前队列中的元素个数n。并依次取出队列的n个节点。对每个节点，输出该节点对应的数值，然后若该节点的左节点非空，则将左节点放入队列。若该节点的右节点非空，则将右节点放入队列。
+3. 循环步骤2，直至队列为空。
+
+### 复杂度分析
+- 时间复杂度O(N)：N为二叉树的节点数
+- 空间复杂度O(N)：最差情况：此二叉树为平衡二叉树，最多有N/2个节点同时在queue中，使用O(N)的额外空间
+
+### 代码
+```
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(root==NULL){
+            return {};
+        }
+        queue<TreeNode*> q;
+        q.push(root);
+        TreeNode* pNode;
+        vector<vector<int>> res;
+        while(!q.empty()){
+            vector<int> tmp;
+            for(int i = q.size();i>0;i--){
+                pNode = q.front();
+                if(pNode->left != NULL){
+                    q.push(pNode->left);
+                }
+                if(pNode->right != NULL){
+                    q.push(pNode->right);
+                }
+                tmp.push_back(pNode->val);
+                q.pop();
+            }
+            res.push_back(tmp);
+        }
+        return res;
+    }
+};
+```
+### 测评
+
+执行用时 :4 ms, 在所有 C++ 提交中击败了89.28%的用户
+
+内存消耗 :12.8 MB, 在所有 C++ 提交中击败了100.00%的用户
+
